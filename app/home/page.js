@@ -228,7 +228,7 @@ export default function Home() {
         <div className="relative z-10">
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center justify-between max-w-6xl mx-auto px-4 sm:px-6 py-6">
-            <div className="text-white text-xl sm:text-2xl font-bold">Algo Coffee</div>
+            <img src="/algo.png" alt="Algo Coffee Logo" className="h-8 sm:h-10" />
             <div className="flex items-center gap-2">
               {navItems.map((item, index) => (
                 <button
@@ -300,8 +300,8 @@ export default function Home() {
               </div>
               <div className="hidden md:block w-28 h-32 sm:w-32 sm:h-40 ml-4 sm:ml-6 rounded-xl overflow-hidden">
                 <img 
-                  src="/3.JPG" 
-                  alt="Coffee" 
+                  src="/lengkap.JPG" 
+                  alt="Coffee Promotion" 
                   className="w-full h-full object-cover" 
                   onError={(e) => { e.target.src = '/api/placeholder/128/128'; }}
                 />

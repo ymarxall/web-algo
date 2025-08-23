@@ -134,7 +134,7 @@ export default function Menu() {
       originalPrice: null,
       rating: 4.5,
       image: '/thaitea.JPG',
-      category: 'Snack',
+      category: 'Non Coffee',
       isPopular: false
     },
     {
@@ -221,7 +221,7 @@ export default function Menu() {
       price: 'Rp25,000',
       originalPrice: null,
       rating: 4.8,
-      image: '/lengkap.JPG',
+      image: '/3.JPG',
       category: 'Snack',
       isPopular: false
     }
