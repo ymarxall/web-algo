@@ -11,14 +11,10 @@ import Image from 'next/image';
 
 export default function Contact() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    feedback: ''
-  });
+  const [result, setResult] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   // Handle scroll for desktop header
   useEffect(() => {
@@ -39,13 +35,13 @@ export default function Contact() {
 
   const contactMethods = [
     {
-      icon: PaperAirplaneIcon, // Placeholder for Instagram icon
+      icon: PaperAirplaneIcon,
       title: 'Follow Instagram',
       description: 'Stay updated with our latest coffee creations',
       action: () => window.open('https://instagram.com/algokopi', '_blank'),
       color: 'from-orange-500 to-orange-600'
     },
-      {
+    {
       icon: PaperAirplaneIcon,
       title: 'Pesan',
       description: 'Drop us a note and we’ll respond within hours',
@@ -79,31 +75,50 @@ export default function Contact() {
     }
   ];
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async (event) => {
+    event.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        feedback: ''
+    setResult("Mengirim...");
+
+    const formData = new FormData(event.target);
+    formData.append("access_key", "5da599dd-bbd0-40e2-ac39-f1a7367af34e");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
       });
-      
-      // Clear success message after 3 seconds
-      setTimeout(() => setSubmitStatus(null), 3000);
-    }, 2000);
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIsSuccess(true);
+        setResult("Pesan berhasil dikirim! Terima kasih atas masukan Anda.");
+        event.target.reset();
+        setTimeout(() => {
+          setResult("");
+          setIsSuccess(false);
+        }, 3000);
+      } else {
+        console.log("Error", data);
+        setIsSuccess(false);
+        setResult("Gagal mengirim pesan: " + data.message);
+        setTimeout(() => {
+          setResult("");
+          setIsSuccess(false);
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Submission error", error);
+      setIsSuccess(false);
+      setResult("Terjadi kesalahan. Silakan coba lagi.");
+      setTimeout(() => {
+        setResult("");
+        setIsSuccess(false);
+      }, 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -282,21 +297,21 @@ export default function Contact() {
               Share Your Feedback
             </h3>
 
-            {submitStatus === 'success' && (
+            {result && (
               <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4 mb-4 animate-bounce-in">
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full flex items-center justify-center mr-3">
                     <span className="text-white text-sm">✓</span>
                   </div>
                   <div>
-                    <p className="font-bold text-orange-800">Feedback Sent!</p>
-                    <p className="text-orange-600 text-sm">Thanks for sharing your thoughts.</p>
+                    <p className="font-bold text-orange-800">{isSuccess ? "Berhasil" : "Gagal"}</p>
+                    <p className="text-orange-600 text-sm">{result}</p>
                   </div>
                 </div>
               </div>
             )}
 
-            <div className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-700 font-medium text-sm mb-2">
                   Your Name *
@@ -306,8 +321,6 @@ export default function Contact() {
                   <input
                     type="text"
                     name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
                     required
                     className="w-full pl-10 pr-4 py-3 border border-orange-200 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all bg-orange-50/50 hover:bg-orange-50"
                     placeholder="Enter your name"
@@ -324,8 +337,6 @@ export default function Contact() {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
                     required
                     className="w-full pl-10 pr-4 py-3 border border-orange-200 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all bg-orange-50/50 hover:bg-orange-50"
                     placeholder="your.email@example.com"
@@ -338,9 +349,7 @@ export default function Contact() {
                   Your Feedback *
                 </label>
                 <textarea
-                  name="feedback"
-                  value={formData.feedback}
-                  onChange={handleInputChange}
+                  name="message"
                   required
                   rows="4"
                   className="w-full px-4 py-3 border border-orange-200 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all bg-orange-50/50 hover:bg-orange-50 resize-none"
@@ -349,7 +358,7 @@ export default function Contact() {
               </div>
 
               <button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={isSubmitting}
                 className={`w-full py-4 rounded-2xl font-bold text-white transition-all duration-300 flex items-center justify-center gap-2 ${
                   isSubmitting 
@@ -360,16 +369,16 @@ export default function Contact() {
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                    Sending...
+                    Mengirim...
                   </>
                 ) : (
                   <>
                     <PaperAirplaneIcon className="w-5 h-5" />
-                    Submit Feedback
+                    Kirim Masukan
                   </>
                 )}
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </section>
