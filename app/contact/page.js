@@ -8,9 +8,6 @@ import {
   MapPinIcon,
 } from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import { Resend } from 'resend';
-
-const resend = new Resend(re_94ZrFWs2_N2cnhYgsPZQM4FJqcnURG8iJ);
 
 export default function Contact() {
   const router = useRouter();
@@ -48,7 +45,7 @@ export default function Contact() {
       action: () => window.open('https://instagram.com/algokopi', '_blank'),
       color: 'from-orange-500 to-orange-600'
     },
-    {
+      {
       icon: PaperAirplaneIcon,
       title: 'Pesan',
       description: 'Drop us a note and we’ll respond within hours',
@@ -90,34 +87,12 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.feedback.trim()) {
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 3000);
-      return;
-    }
-
     setIsSubmitting(true);
-
-    try {
-      await resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: 'yusufmarcelino013@gmail.com',
-        subject: 'New Feedback from Algo Coffee',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #f0f0f0; border-radius: 10px;">
-            <h2 style="color: #f97316; font-size: 24px; font-weight: bold;">New Feedback Submission</h2>
-            <p style="color: #4b5563; font-size: 16px;">You have received new feedback from the Algo Coffee contact form:</p>
-            <hr style="border-top: 1px solid #e5e7eb; margin: 10px 0;">
-            <p style="color: #1f2937; font-size: 16px;"><strong>Name:</strong> ${formData.name}</p>
-            <p style="color: #1f2937; font-size: 16px;"><strong>Email:</strong> ${formData.email}</p>
-            <p style="color: #1f2937; font-size: 16px;"><strong>Feedback:</strong> ${formData.feedback}</p>
-            <hr style="border-top: 1px solid #e5e7eb; margin: 10px 0;">
-            <p style="color: #6b7280; font-size: 14px;">This email was sent via the Algo Coffee website.</p>
-          </div>
-        `
-      });
+    
+    // Simulate submission
+    setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus('success');
       setFormData({
@@ -125,13 +100,10 @@ export default function Contact() {
         email: '',
         feedback: ''
       });
+      
+      // Clear success message after 3 seconds
       setTimeout(() => setSubmitStatus(null), 3000);
-    } catch (error) {
-      console.error('Error sending email:', error);
-      setIsSubmitting(false);
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 3000);
-    }
+    }, 2000);
   };
 
   return (
@@ -319,19 +291,6 @@ export default function Contact() {
                   <div>
                     <p className="font-bold text-orange-800">Feedback Sent!</p>
                     <p className="text-orange-600 text-sm">Thanks for sharing your thoughts.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-            {submitStatus === 'error' && (
-              <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-4 animate-bounce-in">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-white text-sm">!</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-red-800">Submission Failed</p>
-                    <p className="text-red-600 text-sm">Please fill all fields or try again later.</p>
                   </div>
                 </div>
               </div>
