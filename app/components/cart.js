@@ -127,33 +127,33 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
 
       <div className={`fixed z-50 transition-all duration-500 ${
         isExpanded 
-          ? 'top-20 md:top-28 bottom-20 md:bottom-28 left-4 right-4 md:left-1/2 md:-translate-x-1/2 max-w-3xl mx-auto'
-          : 'bottom-16 md:bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs md:w-72'
+          ? 'top-4 bottom-24 left-2 right-2 sm:left-4 sm:right-4 md:top-16 md:bottom-20 md:left-1/2 md:-translate-x-1/2 max-w-3xl mx-auto'
+          : 'bottom-28 sm:bottom-16 left-1/2 -translate-x-1/2 w-[90%] max-w-xs sm:w-72'
       }`}>
         {isExpanded && (
-          <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-orange-200 max-h-[calc(100vh-224px)] md:max-h-[calc(100vh-256px)] min-h-[300px] overflow-hidden flex flex-col transform animate-slide-up">
-            <div className="flex items-center justify-between p-4 border-b border-orange-200 bg-gradient-to-r from-orange-100 to-orange-200/50">
+          <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-orange-200 max-h-[calc(100vh-160px)] sm:max-h-[calc(100vh-160px)] min-h-[200px] overflow-hidden flex flex-col transform animate-slide-up">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 border-b border-orange-200 bg-gradient-to-r from-orange-100 to-orange-200/50">
               <div className="flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-3 shadow-lg">
-                  <ShoppingBagIcon className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-2 sm:mr-3 shadow-lg">
+                  <ShoppingBagIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-black text-xl text-gray-900 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  <h3 className="font-black text-lg sm:text-xl text-gray-900 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                     Your Order
                   </h3>
-                  <p className="text-xs text-gray-600 mt-0.5">{totalItems} items selected</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5">{totalItems} items selected</p>
                 </div>
               </div>
               <button
                 onClick={handleClose}
-                className="p-1 hover:bg-orange-100 rounded-xl transition-all duration-200 hover:scale-110"
+                className="p-1 hover:bg-orange-100 rounded-xl transition-all duration-200 hover:scale-110 self-end sm:self-center"
                 title="Close cart"
               >
-                <XMarkIcon className="w-5 h-5 text-gray-600" />
+                <XMarkIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
               </button>
             </div>
 
-            <div className={`flex-1 max-h-[calc(100vh-288px)] md:max-h-[calc(100vh-320px)] overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-100 transition-all duration-300 ${
+            <div className={`flex-1 max-h-[calc(100vh-224px)] sm:max-h-[calc(100vh-224px)] overflow-y-auto scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-100 transition-all duration-300 ${
               isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
             }`}>
               {cartItems.map((item, index) => {
@@ -161,11 +161,11 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
                 return (
                   <div 
                     key={item.id} 
-                    className="p-4 border-b border-orange-200 last:border-b-0 hover:bg-orange-100/70 transition-all duration-200 group animate-pulse-once bg-gradient-to-r from-orange-50 to-orange-100 shadow-md hover:shadow-lg"
+                    className="p-3 sm:p-4 border-b border-orange-200 last:border-b-0 hover:bg-orange-100/70 transition-all duration-200 group animate-pulse-once bg-gradient-to-r from-orange-50 to-orange-100 shadow-md hover:shadow-lg"
                     style={{ animationDelay: `${index * 80}ms` }}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gradient-to-br from-orange-200 to-orange-300 flex-shrink-0 shadow-lg">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-gradient-to-br from-orange-200 to-orange-300 flex-shrink-0 shadow-lg">
                         <Image
                           src={getValidImagePath(item.image)}
                           alt={item.name || 'Item'}
@@ -180,40 +180,40 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start mb-1">
                           <div className="flex-1 pr-2">
-                            <h4 className="font-black text-lg text-gray-900 mb-0.5 truncate group-hover:text-orange-700 transition-colors">
+                            <h4 className="font-black text-base sm:text-lg text-gray-900 mb-0.5 truncate group-hover:text-orange-700 transition-colors">
                               {item.name || 'Unknown Item'} 
-                              <span className="text-xs text-gray-600 ml-1">({item.category || 'Unknown'})</span>
+                              <span className="text-xs sm:text-sm text-gray-600 ml-1">({item.category || 'Unknown'})</span>
                             </h4>
-                            <p className="text-gray-700 text-sm font-medium line-clamp-2">{item.description || 'No description'}</p>
+                            <p className="text-gray-700 text-xs sm:text-sm font-medium line-clamp-2">{item.description || 'No description'}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="font-black text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
+                          <span className="font-black text-base sm:text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
                             {formatPrice(itemPrice)}
                           </span>
-                          <span className="text-gray-600 text-xs">each</span>
+                          <span className="text-gray-600 text-xs sm:text-sm">each</span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 sm:gap-2">
                         <div className="flex items-center gap-1 bg-orange-100 rounded-xl p-1 border border-orange-200 shadow-lg">
                           <button
                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                            className="w-8 h-8 bg-white hover:bg-red-100 border border-orange-300 hover:border-red-400 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
+                            className="w-7 h-7 sm:w-8 sm:h-8 bg-white hover:bg-red-100 border border-orange-300 hover:border-red-400 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-sm"
                             title="Decrease quantity"
                           >
-                            <MinusIcon className="w-4 h-4 text-gray-700 hover:text-red-600" />
+                            <MinusIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-700 hover:text-red-600" />
                           </button>
-                          <div className="flex flex-col items-center w-10">
-                            <span className="text-lg font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg shadow-sm">{item.quantity || 1}</span>
-                            <span className="text-xs text-gray-600">qty</span>
+                          <div className="flex flex-col items-center w-8 sm:w-10">
+                            <span className="text-base sm:text-lg font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg shadow-sm">{item.quantity || 1}</span>
+                            <span className="text-xs sm:text-sm text-gray-600"></span>
                           </div>
                           <button
                             onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                            className="w-8 h-8 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-md"
+                            className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-md"
                             title="Increase quantity"
                           >
-                            <PlusIcon className="w-4 h-4 text-white" />
+                            <PlusIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                           </button>
                         </div>
                         <button
@@ -221,14 +221,14 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
                           className="p-1 text-gray-600 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 hover:scale-110"
                           title="Remove item"
                         >
-                          <TrashIcon className="w-5 h-5" />
+                          <TrashIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                       </div>
                     </div>
 
                     <div className="mt-2 pt-2 border-t border-orange-200 flex justify-between items-center">
-                      <span className="text-sm text-gray-700 font-medium">Subtotal:</span>
-                      <span className="font-black text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
+                      <span className="text-xs sm:text-sm text-gray-700 font-medium">Subtotal:</span>
+                      <span className="font-black text-base sm:text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
                         {formatPrice(itemPrice * (item.quantity || 1))}
                       </span>
                     </div>
@@ -237,38 +237,38 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
               })}
             </div>
 
-            <div className="p-4 bg-gradient-to-r from-white to-orange-100 border-t border-orange-200">
+            <div className="p-3 sm:p-4 bg-gradient-to-r from-white to-orange-100 border-t border-orange-200">
               <div className="bg-white rounded-xl p-3 shadow-md border border-orange-200">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-gray-700 text-sm font-medium">Items ({totalItems}):</span>
-                  <span className="font-bold text-sm text-gray-900">{formatPrice(totalPrice)}</span>
+                  <span className="text-gray-700 text-xs sm:text-sm font-medium">Items ({totalItems}):</span>
+                  <span className="font-bold text-xs sm:text-sm text-gray-900">{formatPrice(totalPrice)}</span>
                 </div>
                 <div className="border-t border-orange-200 pt-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-black text-base text-gray-900">Total:</span>
-                    <span className="font-black text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
+                    <span className="font-black text-sm sm:text-base text-gray-900">Total:</span>
+                    <span className="font-black text-base sm:text-lg bg-gradient-to-r from-orange-600 to-orange-700 bg-clip-text text-transparent">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex gap-3 mt-3">
+              <div className="flex gap-2 sm:gap-3 mt-3">
                 <button
                   onClick={handleClearCart}
-                  className="flex-1 py-2 px-4 bg-white hover:bg-red-100 text-gray-800 hover:text-red-700 border border-orange-300 hover:border-red-400 rounded-xl font-bold text-sm transition-all duration-200 hover:scale-105 shadow-sm"
+                  className="flex-1 py-2 px-3 sm:px-4 bg-white hover:bg-red-100 text-gray-800 hover:text-red-700 border border-orange-300 hover:border-red-400 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 hover:scale-105 shadow-sm"
                 >
-                  <TrashIcon className="w-4 h-4 inline mr-1" />
+                  <TrashIcon className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
                   Clear Cart
                 </button>
                 <button
                   onClick={handleCheckout}
-                  className="flex-2 py-2 px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold text-sm transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-1"
+                  className="flex-2 py-2 px-3 sm:px-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-1"
                   disabled={cartItems.length === 0}
                 >
-                  <HeartIcon className="w-4 h-4" />
+                  <HeartIcon className="w-3 h-3 sm:w-4 sm:h-4" />
                   Order Now
-                  <SparklesIcon className="w-4 h-4" />
+                  <SparklesIcon className="w-3 h-3 sm:w-4 sm:h-4" />
                 </button>
               </div>
             </div>
@@ -278,32 +278,32 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
         {!isExpanded && (
           <button
             onClick={() => setIsExpanded(true)}
-            className="group w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 px-4 rounded-2xl shadow-lg flex items-center justify-between transition-all duration-300 hover:scale-105 hover:shadow-orange-600/30 border border-orange-500/30 animate-pulse-slow"
+            className="group w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-2 sm:py-3 px-3 sm:px-4 rounded-2xl shadow-lg flex items-center justify-between transition-all duration-300 hover:scale-105 hover:shadow-orange-600/30 border border-orange-500/30 animate-pulse-slow"
           >
             <div className="flex items-center">
-              <div className="relative mr-3">
-                <div className="w-10 h-10 bg-white/30 rounded-xl flex items-center justify-center backdrop-blur-md shadow-md">
-                  <ShoppingBagIcon className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
+              <div className="relative mr-2 sm:mr-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/30 rounded-xl flex items-center justify-center backdrop-blur-md shadow-md">
+                  <ShoppingBagIcon className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-200" />
                 </div>
                 {totalItems > 0 && (
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-600 to-pink-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-bounce shadow-md">
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-r from-red-600 to-pink-600 text-white text-xs font-bold rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center animate-bounce shadow-md">
                     {totalItems > 99 ? '99+' : totalItems}
                   </div>
                 )}
               </div>
               <div className="text-left">
-                <p className="text-base font-bold mb-0.5">
+                <p className="text-sm sm:text-base font-bold mb-0.5">
                   {totalItems} item{totalItems !== 1 ? 's' : ''}
                 </p>
                 <p className="text-xs font-medium opacity-90 flex items-center gap-1">
-                  <SparklesIcon className="w-3 h-3" />
+                  <SparklesIcon className="w-2 h-2 sm:w-3 sm:h-3" />
                   Review order
                 </p>
               </div>
             </div>
             
             <div className="text-right">
-              <p className="font-bold text-lg">{formatPrice(totalPrice)}</p>
+              <p className="font-bold text-base sm:text-lg">{formatPrice(totalPrice)}</p>
             </div>
           </button>
         )}
@@ -347,7 +347,7 @@ const FloatingCart = ({ cartItems, onUpdateCart, onRemoveFromCart, onClearCart, 
           scrollbar-color: #f97316 #fef7ee;
         }
         .scrollbar-thin::-webkit-scrollbar {
-          width: 8px;
+          width: 6px;
         }
         .scrollbar-thin::-webkit-scrollbar-track {
           background: #fef7ee;
