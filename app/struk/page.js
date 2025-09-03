@@ -1,3 +1,4 @@
+
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -7,7 +8,7 @@ import {
   ShoppingBagIcon,
   UserIcon,
   PhoneIcon,
-  MapPinIcon,
+  TableCellsIcon,
   ClockIcon,
   PrinterIcon,
   CheckCircleIcon,
@@ -19,7 +20,7 @@ import {
   ShoppingBagIcon as ShoppingBagSolidIcon,
   UserIcon as UserSolidIcon,
   PhoneIcon as PhoneSolidIcon,
-  MapPinIcon as MapPinSolidIcon,
+  TableCellsIcon as TableCellsSolidIcon,
 } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
@@ -32,7 +33,7 @@ function StrukContent() {
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     phone: '',
-    address: '',
+    tableNumber: '',
     notes: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,7 +44,7 @@ function StrukContent() {
 
   const whatsappNumber = '62895331665379';
 
-  // Handle scroll untuk header desktop
+  // Handle scroll for sticky desktop header
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -54,7 +55,7 @@ function StrukContent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Load cartItems dari URL query atau localStorage
+  // Load cart items from URL query or localStorage
   useEffect(() => {
     const cartItemsString = searchParams.get('cartItems');
     if (cartItemsString) {
@@ -101,7 +102,7 @@ function StrukContent() {
     { icon: '📞', path: '/contact', active: false, label: 'Contact' },
   ];
 
-  // Kalkulasi total
+  // Calculate total price
   const totalPrice = cartItems.reduce((sum, item) => {
     const price = parseInt(item.price.replace(/[^\d]/g, '')) || 0;
     return sum + price * item.quantity;
@@ -149,7 +150,7 @@ function StrukContent() {
 👤 *INFORMASI PELANGGAN*
 Nama: ${customerInfo.name}
 No. HP: ${customerInfo.phone}
-Alamat: ${customerInfo.address}
+Nomor Meja: ${customerInfo.tableNumber}
 ${customerInfo.notes ? `Catatan: ${customerInfo.notes}` : ''}
 
 🛍️ *DETAIL PESANAN*
@@ -166,8 +167,8 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
   };
 
   const handleSubmitOrder = () => {
-    if (!customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.address.trim()) {
-      alert('Mohon lengkapi semua data yang diperlukan (Nama, No. HP, dan Alamat)');
+    if (!customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.tableNumber.trim()) {
+      alert('Mohon lengkapi semua data yang diperlukan (Nama, No. HP, dan Nomor Meja)');
       return;
     }
 
@@ -198,35 +199,32 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-200/30 to-orange-300/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-orange-100/40 to-orange-200/40 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-orange-50/20 to-orange-100/20 rounded-full blur-3xl animate-spin" style={{animationDuration: '20s'}}></div>
-        
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-orange-100/40 to-orange-200/40 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-orange-50/20 to-orange-100/20 rounded-full blur-3xl animate-spin" style={{ animationDuration: '20s' }}></div>
+
         {/* Floating particles */}
-        <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '0s'}}></div>
-        <div className="absolute top-40 right-32 w-1 h-1 bg-orange-500 rounded-full animate-bounce opacity-80" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-32 left-40 w-1.5 h-1.5 bg-orange-300 rounded-full animate-bounce opacity-70" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-60 left-1/3 w-1 h-1 bg-orange-400 rounded-full animate-bounce opacity-60" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-20 left-20 w-2 h-2 bg-orange-400 rounded-full animate-bounce opacity-60" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-40 right-32 w-1 h-1 bg-orange-500 rounded-full animate-bounce opacity-80" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-32 left-40 w-1.5 h-1.5 bg-orange-300 rounded-full animate-bounce opacity-70" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-60 left-1/3 w-1 h-1 bg-orange-400 rounded-full animate-bounce opacity-60" style={{ animationDelay: '3s' }}></div>
       </div>
 
       {/* Sticky Header for Desktop (appears on scroll) */}
-      <div className={`hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl shadow-lg border-b border-orange-100 transition-transform duration-300 ${
-        scrolled ? 'translate-y-0' : '-translate-y-full'
-      }`}>
+      <div
+        className={`hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl shadow-lg border-b border-orange-100 transition-transform duration-300 ${
+          scrolled ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <div className="flex items-center justify-between max-w-7xl mx-auto p-4">
-          <Image 
-            src="/algo.png" 
-            alt="Algo Coffee Logo" 
-            width={150}
-            height={150}
-          />
+          <Image src="/algo.png" alt="Algo Coffee Logo" width={150} height={150} />
           <div className="flex items-center gap-2">
             {navItems.map((item, index) => (
               <button
                 key={index}
                 onClick={() => router.push(item.path)}
                 className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center gap-2 ${
-                  item.active 
-                    ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg shadow-orange-400/25' 
+                  item.active
+                    ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg shadow-orange-400/25'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-orange-50'
                 }`}
               >
@@ -243,12 +241,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Image 
-              src="/algo.png" 
-              alt="Algo Coffee Logo" 
-              width={150}
-              height={150}
-            />
+            <Image src="/algo.png" alt="Algo Coffee Logo" width={150} height={150} />
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-2">
@@ -257,8 +250,8 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                   key={index}
                   onClick={() => router.push(item.path)}
                   className={`px-6 py-3 rounded-xl font-bold transition-all duration-300 flex items-center space-x-2 ${
-                    item.active 
-                      ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg shadow-orange-400/25' 
+                    item.active
+                      ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg shadow-orange-400/25'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-orange-50'
                   }`}
                 >
@@ -288,8 +281,8 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
               </span>
             </h1>
             <p className="text-base md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-light">
-              Review your <span className="text-orange-600 font-semibold">cart</span>, add your 
-              <span className="text-orange-700 font-semibold">details</span>, and submit via 
+              Review your <span className="text-orange-600 font-semibold">cart</span>, add your{' '}
+              <span className="text-orange-700 font-semibold">details</span>, and submit via{' '}
               <span className="text-orange-800 font-semibold">WhatsApp</span> to enjoy your coffee!
             </p>
           </div>
@@ -350,9 +343,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                             <p className="text-gray-600 text-sm">{formatPrice(itemPrice)} × {item.quantity}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-orange-600 font-bold text-lg">
-                              {formatPrice(itemPrice * item.quantity)}
-                            </p>
+                            <p className="text-orange-600 font-bold text-lg">{formatPrice(itemPrice * item.quantity)}</p>
                           </div>
                         </div>
                       );
@@ -413,9 +404,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-gray-700 font-medium text-sm mb-2">
-                        Nama Lengkap *
-                      </label>
+                      <label className="block text-gray-700 font-medium text-sm mb-2">Nama Lengkap *</label>
                       <div className="relative">
                         <UserIcon className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
                         <input
@@ -430,9 +419,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                     </div>
 
                     <div>
-                      <label className="block text-gray-700 font-medium text-sm mb-2">
-                        Nomor WhatsApp *
-                      </label>
+                      <label className="block text-gray-700 font-medium text-sm mb-2">Nomor WhatsApp *</label>
                       <div className="relative">
                         <PhoneIcon className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
                         <input
@@ -447,26 +434,22 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                     </div>
 
                     <div>
-                      <label className="block text-gray-700 font-medium text-sm mb-2">
-                        Alamat Pengiriman *
-                      </label>
+                      <label className="block text-gray-700 font-medium text-sm mb-2">Nomor Meja *</label>
                       <div className="relative">
-                        <MapPinIcon className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
-                        <textarea
-                          value={customerInfo.address}
-                          onChange={(e) => handleInputChange('address', e.target.value)}
+                        <TableCellsIcon className="w-5 h-5 text-gray-400 absolute left-3 top-3" />
+                        <input
+                          type="text"
+                          value={customerInfo.tableNumber}
+                          onChange={(e) => handleInputChange('tableNumber', e.target.value)}
                           required
-                          rows={3}
-                          className="w-full pl-10 pr-4 py-3 border border-orange-200 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all bg-orange-50/50 hover:bg-orange-50 resize-none text-sm"
-                          placeholder="Masukkan alamat lengkap Anda"
+                          className="w-full pl-10 pr-4 py-3 border border-orange-200 rounded-2xl focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all bg-orange-50/50 hover:bg-orange-50 text-sm"
+                          placeholder="Masukkan nomor meja Anda"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-gray-700 font-medium text-sm mb-2">
-                        Catatan Tambahan (Opsional)
-                      </label>
+                      <label className="block text-gray-700 font-medium text-sm mb-2">Catatan Tambahan (Opsional)</label>
                       <textarea
                         value={customerInfo.notes}
                         onChange={(e) => handleInputChange('notes', e.target.value)}
@@ -478,9 +461,9 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
 
                     <button
                       onClick={handleSubmitOrder}
-                      disabled={isSubmitting || !customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.address.trim()}
+                      disabled={isSubmitting || !customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.tableNumber.trim()}
                       className={`w-full py-4 rounded-2xl font-bold text-white transition-all duration-300 flex items-center justify-center gap-2 text-sm ${
-                        isSubmitting || !customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.address.trim()
+                        isSubmitting || !customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.tableNumber.trim()
                           ? 'bg-gray-400 cursor-not-allowed'
                           : 'bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 shadow-lg hover:shadow-xl hover:scale-105'
                       }`}
@@ -499,9 +482,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
                         </>
                       )}
                     </button>
-                    <p className="text-center text-sm text-gray-600 mt-2">
-                      Anda akan diarahkan ke WhatsApp dengan detail pesanan Anda
-                    </p>
+                    <p className="text-center text-sm text-gray-600 mt-2">Anda akan diarahkan ke WhatsApp dengan detail pesanan Anda</p>
                   </div>
                 </div>
               </div>
@@ -518,9 +499,7 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
               key={index}
               onClick={() => router.push(item.path)}
               className={`flex flex-col items-center space-y-1 py-2 px-4 rounded-xl transition-all duration-300 ${
-                item.active 
-                  ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg' 
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-orange-50'
+                item.active ? 'bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg' : 'text-gray-600 hover:text-gray-900 hover:bg-orange-50'
               }`}
             >
               <span className="text-xl">{item.icon}</span>
@@ -538,18 +517,35 @@ Terima kasih telah memesan di Algo Coffee! 🙏`;
           animation: pulseOnce 0.5s ease-in-out;
         }
         @keyframes pulseOnce {
-          0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.5); }
-          50% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+          0% {
+            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.5);
+          }
+          50% {
+            box-shadow: 0 0 0 10px rgba(249, 115, 22, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(249, 115, 22, 0);
+          }
         }
         .animate-bounce-in {
           animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         @keyframes bounceIn {
-          0% { opacity: 0; transform: scale(0.3); }
-          50% { opacity: 1; transform: scale(1.05); }
-          70% { transform: scale(0.9); }
-          100% { opacity: 1; transform: scale(1); }
+          0% {
+            opacity: 0;
+            transform: scale(0.3);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+          70% {
+            transform: scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
       `}</style>
     </div>
